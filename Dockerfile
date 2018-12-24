@@ -45,6 +45,6 @@ RUN unzip terraform_0.12.0-alpha4_terraform_0.12.0-alpha4_linux_amd64.zip
 
 RUN mv terraform /usr/bin/terraform
 
-RUN RUN source scl_source enable rh-python36
+RUN source scl_source enable rh-python36
 
 CMD [ "/usr/bin/powershell" ]
