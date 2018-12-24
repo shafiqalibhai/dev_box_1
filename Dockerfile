@@ -40,4 +40,16 @@ RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
 
 RUN yum clean all
 
+RUN ln -s /usr/bin/pip3.6 /bin/pip
+
+RUN rm /usr/bin/python
+
+RUN ln -s /usr/bin/python3.6 /usr/bin/python
+
+RUN rm -rf terraform*
+
+RUN pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+
+RUN pip install click
+
 CMD [ "/usr/bin/powershell" ]
