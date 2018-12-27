@@ -49,6 +49,9 @@ RUN mkdir -p /go && chmod -R 777 /go && \
 
 ENV GOPATH /go
 
+ENV LC_ALL en_US.utf-8
+ENV LANG en_US.utf-8
+
 RUN yum clean all
 
-CMD [ "/usr/bin/powershell" ]
+CMD [ "pwsh" ]
