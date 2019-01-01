@@ -54,4 +54,4 @@ ENV LANG en_US.utf-8
 
 RUN yum clean all
 
-CMD [ "pwsh" ]
+CMD [ "bash" ]
