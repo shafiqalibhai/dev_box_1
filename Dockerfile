@@ -22,6 +22,7 @@ RUN yum -y install \
         epel-release \
         make \
         gcc \
+        gcc-g++ \
         git \
         openssl-devel \
         zlib-devel \
