@@ -1,10 +1,38 @@
+
+ARG RUBY_PATH=/usr/local/
+ARG RUBY_VERSION=2.6.0
+
+FROM drecom/centos-base:7 AS rubybuild
+ARG RUBY_PATH
+ARG RUBY_VERSION
+RUN git clone git://github.com/rbenv/ruby-build.git $RUBY_PATH/plugins/ruby-build \
+&&  $RUBY_PATH/plugins/ruby-build/install.sh
+RUN ruby-build $RUBY_VERSION $RUBY_PATH
+
+
 FROM centos:latest
 
 MAINTAINER DeployView Limited
 
 LABEL Name="deployview/dev_box_1"
 
-RUN yum -y update
+RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
+    && yum -y update \
+    && yum -y install python36u python36u-libs python36u-devel python36u-pip
+
+ARG RUBY_PATH
+ENV PATH $RUBY_PATH/bin:$PATH
+RUN yum -y install \
+        epel-release \
+        make \
+        gcc \
+        git \
+        openssl-devel \
+        zlib-devel \
+        mysql-devel \
+        redis \
+        sqlite-devel
+COPY --from=rubybuild $RUBY_PATH $RUBY_PATH
 
 RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.2.0-preview.3/powershell-preview-6.2.0_preview.3-1.rhel.7.x86_64.rpm
 
@@ -32,11 +60,7 @@ RUN yum -y install unzip
 
 RUN unzip terraform_0.11.11_linux_amd64.zip
 
-RUN mv terraform /usr/bin/terraform
-
-RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
-    && yum -y update \
-    && yum -y install python36u python36u-libs python36u-devel python36u-pip 
+RUN mv terraform /usr/bin/terraform 
 
 RUN rm -rf terraform*
 
@@ -48,12 +72,6 @@ RUN mkdir -p /go && chmod -R 777 /go && \
     yum -y install golang
     
 RUN yum -y install ruby
-
-COPY Gemfile /tmp 
-
-WORKDIR /tmp
-
-RUN bundle install
 
 ENV GOPATH /go
 
