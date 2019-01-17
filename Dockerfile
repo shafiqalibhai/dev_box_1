@@ -2,7 +2,7 @@
 ARG RUBY_PATH=/usr/local/
 ARG RUBY_VERSION=2.6.0
 
-FROM drecom/centos-base:7 AS rubybuild
+FROM centos:latest AS rubybuild
 ARG RUBY_PATH
 ARG RUBY_VERSION
 RUN git clone git://github.com/rbenv/ruby-build.git $RUBY_PATH/plugins/ruby-build \
@@ -30,6 +30,12 @@ RUN yum -y install \
         redis \
         sqlite-devel
 COPY --from=rubybuild $RUBY_PATH $RUBY_PATH
+
+RUN yum groupinstall 'Development Tools' -y
+
+COPY Gemfile* /tmp/
+WORKDIR /tmp
+RUN bundle install
 
 RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
     && yum -y update \
@@ -77,9 +83,5 @@ ENV LANG en_US.utf-8
 
 RUN yum update -y
 RUN yum clean all
-
-COPY Gemfile* /tmp/
-WORKDIR /tmp
-RUN bundle install
 
 CMD [ "bash" ]
