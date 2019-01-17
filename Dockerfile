@@ -35,7 +35,7 @@ RUN yum groupinstall 'Development Tools' -y
 
 COPY Gemfile* /tmp/
 WORKDIR /tmp
-RUN bundle install
+RUN bundle install --system
 
 RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
     && yum -y update \
