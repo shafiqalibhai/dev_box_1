@@ -49,6 +49,12 @@ RUN mkdir -p /go && chmod -R 777 /go && \
     
 RUN yum -y install ruby
 
+COPY Gemfile /tmp 
+
+WORKDIR /tmp
+
+RUN bundle install
+
 ENV GOPATH /go
 
 ENV LC_ALL en_US.utf-8
