@@ -46,6 +46,8 @@ RUN pip3.6 install click
 
 RUN mkdir -p /go && chmod -R 777 /go && \
     yum -y install golang
+    
+RUN yum -y install ruby
 
 ENV GOPATH /go
 
