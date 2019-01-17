@@ -74,6 +74,11 @@ ENV GOPATH /go
 ENV LC_ALL en_US.utf-8
 ENV LANG en_US.utf-8
 
+RUN yum update -y
 RUN yum clean all
+
+COPY Gemfile* /tmp/
+WORKDIR /tmp
+RUN bundle install
 
 CMD [ "bash" ]
