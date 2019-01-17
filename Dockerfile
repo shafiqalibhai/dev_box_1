@@ -16,10 +16,6 @@ MAINTAINER DeployView Limited
 
 LABEL Name="deployview/dev_box_1"
 
-RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
-    && yum -y update \
-    && yum -y install python36u python36u-libs python36u-devel python36u-pip
-
 ARG RUBY_PATH
 ENV PATH $RUBY_PATH/bin:$PATH
 RUN yum -y install \
@@ -33,6 +29,10 @@ RUN yum -y install \
         redis \
         sqlite-devel
 COPY --from=rubybuild $RUBY_PATH $RUBY_PATH
+
+RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
+    && yum -y update \
+    && yum -y install python36u python36u-libs python36u-devel python36u-pip
 
 RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.2.0-preview.3/powershell-preview-6.2.0_preview.3-1.rhel.7.x86_64.rpm
 
@@ -49,8 +49,6 @@ RUN sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.micros
 RUN yum -y install azure-cli
 
 RUN yum -y install awscli
-
-RUN yum -y install git
 
 RUN yum -y install wget
 
@@ -70,8 +68,6 @@ RUN pip3.6 install click
 
 RUN mkdir -p /go && chmod -R 777 /go && \
     yum -y install golang
-    
-RUN yum -y install ruby
 
 ENV GOPATH /go
 
