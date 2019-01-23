@@ -33,7 +33,6 @@ WORKDIR /tmp
 RUN bundle install --system
 
 RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
-    && yum -y update \
     && yum -y install python36u python36u-libs python36u-devel python36u-pip
 
 RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.2.0-preview.3/powershell-preview-6.2.0_preview.3-1.rhel.7.x86_64.rpm
@@ -80,7 +79,6 @@ ENV GOPATH /go
 ENV LC_ALL en_US.utf-8
 ENV LANG en_US.utf-8
 
-RUN yum update -y
 RUN yum clean all
 
 WORKDIR /
