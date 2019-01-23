@@ -18,6 +18,13 @@ LABEL Name="deployview/dev_box_1"
 
 ARG RUBY_PATH
 ENV PATH $RUBY_PATH/bin:$PATH
+
+COPY cert.pem /etc/pki/ca-trust/source/anchors
+
+RUN update-ca-trust force-enable
+
+RUN update-ca-trust extract
+
 RUN yum -y install \
         epel-release \
         make \
