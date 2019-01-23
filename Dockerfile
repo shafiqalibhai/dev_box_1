@@ -22,13 +22,8 @@ RUN yum -y install \
         epel-release \
         make \
         gcc \
-        gcc-g++ \
         git \
-        openssl-devel \
-        zlib-devel \
-        mysql-devel \
-        redis \
-        sqlite-devel
+        openssl-devel
 COPY --from=rubybuild $RUBY_PATH $RUBY_PATH
 
 RUN yum groupinstall 'Development Tools' -y
@@ -76,6 +71,10 @@ RUN pip3.6 install click
 RUN mkdir -p /go && chmod -R 777 /go && \
     yum -y install golang
 
+RUN yum -y install mlocate
+
+RUN yum -y install nodejs
+
 ENV GOPATH /go
 
 ENV LC_ALL en_US.utf-8
@@ -83,5 +82,7 @@ ENV LANG en_US.utf-8
 
 RUN yum update -y
 RUN yum clean all
+
+WORKDIR /
 
 CMD [ "bash" ]
