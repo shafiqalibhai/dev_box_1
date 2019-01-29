@@ -79,8 +79,6 @@ RUN mkdir -p /go && chmod -R 777 /go && \
 
 RUN yum -y install mlocate
 
-RUN yum -y install nodejs
-
 ENV GOPATH /go
 
 ENV LC_ALL en_US.utf-8
