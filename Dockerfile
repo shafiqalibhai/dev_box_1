@@ -29,22 +29,15 @@ RUN yum -y install \
         epel-release \
         make \
         gcc \
-        git \
-        openssl-devel
+        git
 COPY --from=rubybuild $RUBY_PATH $RUBY_PATH
 
 RUN yum groupinstall 'Development Tools' -y
 
-COPY Gemfile* /tmp/
-WORKDIR /tmp
-RUN bundle install --system
-
 RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
     && yum -y install python36u python36u-libs python36u-devel python36u-pip
 
-RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.2.0-preview.3/powershell-preview-6.2.0_preview.3-1.rhel.7.x86_64.rpm
-
-RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.1.1/powershell-6.1.1-1.rhel.7.x86_64.rpm
+RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.1.2/powershell-6.1.2-1.rhel.7.x86_64.rpm
 
 RUN pwsh -Command Install-Module -Name Az -force
 
@@ -66,11 +59,9 @@ RUN yum -y install unzip
 
 RUN unzip terraform_0.11.11_linux_amd64.zip
 
-RUN mv terraform /usr/bin/terraform 
+RUN rm -rf terraform_0.11.11_linux_amd64.zip
 
-RUN rm -rf terraform*
-
-RUN pip3.6 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3.6 install -U
+RUN mv terraform* /usr/bin/terraform 
 
 RUN pip3.6 install click
 
