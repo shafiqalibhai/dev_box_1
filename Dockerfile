@@ -29,15 +29,21 @@ RUN yum -y install \
         epel-release \
         make \
         gcc \
-        git
+        git \
+        openssl-devel \
+        libxml2-devel
 COPY --from=rubybuild $RUBY_PATH $RUBY_PATH
 
 RUN yum groupinstall 'Development Tools' -y
 
+COPY Gemfile* /tmp/
+WORKDIR /tmp
+RUN bundle install --system
+
 RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
     && yum -y install python36u python36u-libs python36u-devel python36u-pip
 
-RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.1.2/powershell-6.1.2-1.rhel.7.x86_64.rpm
+RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.1.3/powershell-6.1.3-1.rhel.7.x86_64.rpm
 
 RUN pwsh -Command Install-Module -Name Az -force
 
@@ -63,12 +69,16 @@ RUN rm -rf terraform_0.11.11_linux_amd64.zip
 
 RUN mv terraform* /usr/bin/terraform 
 
+RUN pip3.6 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3.6 install -U
+
 RUN pip3.6 install click
 
 RUN mkdir -p /go && chmod -R 777 /go && \
     yum -y install golang
 
 RUN yum -y install mlocate
+
+RUN yum -y install nodejs
 
 ENV GOPATH /go
 
