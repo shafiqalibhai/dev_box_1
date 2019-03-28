@@ -63,9 +63,9 @@ RUN wget https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linu
 
 RUN yum -y install unzip
 
-RUN unzip terraform_0.11.11_linux_amd64.zip
+RUN unzip terraform_0.11.13_linux_amd64.zip
 
-RUN rm -rf terraform_0.11.11_linux_amd64.zip
+RUN rm -rf terraform_0.11.13_linux_amd64.zip
 
 RUN mv terraform* /usr/bin/terraform 
 
