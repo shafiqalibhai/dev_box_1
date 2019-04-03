@@ -43,7 +43,7 @@ RUN bundle install --system
 RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
     && yum -y install python36u python36u-libs python36u-devel python36u-pip
 
-RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.1.3/powershell-6.1.3-1.rhel.7.x86_64.rpm
+RUN yum -y install https://github.com/PowerShell/PowerShell/releases/download/v6.2.0/powershell-6.2.0-1.rhel.7.x86_64.rpm
 
 RUN pwsh -Command Install-Module -Name Az -force
 
@@ -72,6 +72,8 @@ RUN mv terraform* /usr/bin/terraform
 RUN pip3.6 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3.6 install -U
 
 RUN pip3.6 install click
+
+RUN pip3.6 install azure-devops
 
 RUN mkdir -p /go && chmod -R 777 /go && \
     yum -y install golang
