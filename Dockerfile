@@ -1,6 +1,6 @@
 
 ARG RUBY_PATH=/usr/local/
-ARG RUBY_VERSION=2.6.0
+ARG RUBY_VERSION=2.6.2
 
 FROM drecom/centos-base:7 AS rubybuild
 ARG RUBY_PATH
@@ -85,6 +85,8 @@ RUN mkdir -p /go && chmod -R 777 /go && \
 RUN yum -y install mlocate
 
 RUN yum -y install nodejs
+
+RUN curl -fsSL https://get.pulumi.com | sh
 
 ENV GOPATH /go
 
