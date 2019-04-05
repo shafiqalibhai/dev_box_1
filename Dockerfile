@@ -55,6 +55,8 @@ RUN sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.micros
 
 RUN yum -y install azure-cli
 
+RUN az extension add --name azure-devops
+
 RUN yum -y install awscli
 
 RUN yum -y install wget
