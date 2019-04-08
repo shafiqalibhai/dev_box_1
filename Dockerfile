@@ -79,6 +79,8 @@ RUN pip3.6 install azure-devops
 
 RUN pip3.6 install keyring~=17.1.1
 
+RUN /usr/lib64/az/bin/python pip install keyring~=17.1.1
+
 RUN mkdir -p /go && chmod -R 777 /go && \
     yum -y install golang
 
