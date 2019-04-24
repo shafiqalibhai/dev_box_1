@@ -77,7 +77,7 @@ RUN pip3.6 install click
 
 RUN pip3.6 install azure-devops
 
-RUN pip3.6 install keyring~=17.1.1
+RUN pip3.6 install jinja2
 
 RUN /usr/lib64/az/bin/python -m pip install keyring~=17.1.1
 
