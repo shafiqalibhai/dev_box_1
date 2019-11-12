@@ -40,7 +40,7 @@ RUN yum -y install \
 
 RUN yum -y install which && gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB && curl -sSL https://get.rvm.io | bash -s stable --ruby
 
-RUN gem install bundler
+RUN source /usr/local/rvm/scripts/rvm && gem install bundler
 
 RUN curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && yum install -y powershell
 
