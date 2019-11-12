@@ -28,16 +28,12 @@ RUN yum -y install \
         nodejs \
         mlocate \
         awscli \
-        azure-cli \
         ruby \
         golang \
         npm \
-        azure-functions-core-tools \
         python3 \
         python3-pip \
-        python3-devel \
-        ruby-dev \
-        recode
+        python3-devel
 
 
 #RUN yum groupinstall 'Development Tools' -y
@@ -45,10 +41,6 @@ RUN yum -y install \
 RUN gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB && curl -sSL https://get.rvm.io | bash -s stable --ruby
 
 RUN gem install bundler
-
-COPY Gemfile* /tmp/
-WORKDIR /tmp
-RUN bundle install --system
 
 RUN curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && yum install -y powershell
 
@@ -69,6 +61,12 @@ RUN pip3 install keyring
 RUN curl -LO https://github.com/GoogleCloudPlatform/terraformer/releases/download/$(curl -s https://api.github.com/repos/GoogleCloudPlatform/terraformer/releases/latest | grep tag_name | cut -d '"' -f 4)/terraformer-linux-amd64 && chmod +x terraformer-linux-amd64 && mv terraformer-linux-amd64 /usr/local/bin/terraformer
 
 RUN wget https://releases.hashicorp.com/packer/1.4.5/packer_1.4.5_linux_amd64.zip && unzip packer_1.4.5_linux_amd64.zip && mv packer /usr/local/bin/ && rm packer_1.4.5_linux_amd64.zip
+
+RUN curl -L https://aka.ms/InstallAzureCli | bash
+
+COPY Gemfile* /tmp/
+WORKDIR /tmp
+RUN bundle install --system
 
 ENV LC_ALL en_US.utf-8
 ENV LANG en_US.utf-8
@@ -101,4 +99,4 @@ VOLUME [ "/home/coder/projects" ]
 
 EXPOSE 8080
 
-ENTRYPOINT ["/usr/local/bin/code-server --host 0.0.0.0"]
+CMD [ "zsh" ]
