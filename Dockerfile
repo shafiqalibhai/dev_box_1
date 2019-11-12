@@ -18,7 +18,7 @@ RUN yum -y install \
         gcc \
         git \
         openssl-devel \
-        libxml2-devel
+        libxml2-devel \
         curl \
         wget \
         nano \
